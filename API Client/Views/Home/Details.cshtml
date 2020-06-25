@@ -1,0 +1,58 @@
+﻿@model DetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+    <div class="text-center">
+        @if (Model.Phrase == null)
+        {
+            <h2 class="font-weight-bold">The damn thing seems to have dissapeared!</h2>
+        }
+        else
+        {
+            <h5>You are now viewing:</h5>
+            <h1>@Model.Phrase.Text</h1>
+            <hr />
+            @if (Model.Variants == null)
+            {
+                <h2 class="font-weight-bold">The damn thing seems to have dissapeared!</h2>
+            }
+            else
+            {
+                <div class="row justify-content-center">
+                    <div class="col-7">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="bg-dark">
+                                    <td class="text-white font-weight-bold">Language</td>
+                                    <td class="text-white font-weight-bold">Translation</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Variants.Any())
+                                {
+                                    foreach (var variant in Model.Variants)
+                                    {
+                                        <tr>
+                                            <td>@variant.Language</td>
+                                            <td>@variant.Text</td>
+                                            <td>
+                                                <button class="text-info font-weight-bold" title="Edit"
+                                                        onclick="location.href='@Url.Action("EditVariant", "Home", new {id = variant.Id, phraseText = Model.Phrase.Text, isNew = false })'">E</button>
+                                                <button class="text-danger font-weight-bold" title="Delete"
+                                                        onclick="location.href='@Url.Action("DeleteVariant", "Home", new {id = variant.Id, phraseId = variant.PhraseId })'">X</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            <hr />
+            <button onclick="location.href='@Url.Action("EditVariant", "Home", new { phraseId = Model.Phrase.Id, phraseText = Model.Phrase.Text, isNew = true })'">I know other variants!</button>
+        }
+    </div>
+
+

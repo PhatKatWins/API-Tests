@@ -1,0 +1,47 @@
+﻿@model IEnumerable<API_Service.Models.Phrase>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <hr />
+    @if (Model == null)
+    {
+        <h2>There was no response from the API.</h2>
+    }
+    else
+    {
+        <div class="row justify-content-lg-center">
+            <div class="col-5">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="bg-dark">
+                            <td class="font-weight-bold text-white">Phrase</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Any())
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr style="cursor:pointer" >
+                                    <td class="font-weight-bold" onclick="location.href='@Url.Action("Details", "Home", new {item.Id})'">@item.Text</td>
+                                    <td>
+                                        <button class="text-info font-weight-bold" title="Edit"
+                                                onclick="location.href='@Url.Action("EditPhrase", "Home", new {id = item.Id, isNew = false })'">E</button>
+                                        <button class="text-danger font-weight-bold" title="Delete"
+                                                onclick="location.href='@Url.Action("DeletePhrase", "Home", new { id = item.Id })'">X</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <button onclick="location.href='@Url.Action("EditPhrase", "Home", new { isNew = true })'">I've got another one!</button>
+    }
+</div>

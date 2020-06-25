@@ -1,0 +1,40 @@
+﻿@model API_Service.Models.Phrase
+@{
+    ViewData["Title"] = "EditPhrase";
+}
+<div class="text-center">
+    @if (Model == null)
+    {
+        <h1>The damned thing seems to have dissapeard from the database.</h1>
+    }
+    else
+    {
+        @if (ViewBag.isNew)
+        {
+            <h1>You are trying to add a new phrase.</h1>
+            <hr />
+            <form asp-action="SaveNewPhrase">
+                <div class="form-group">
+                    <label class="align-top" for="text">Text:</label>
+                    <textarea name="text" placeholder="@Model.Text"></textarea>
+                </div>
+                <button>Save!</button>
+            </form>
+        }
+        else
+        {
+            <h5>You are trying to edit:</h5>
+            <h1>@Model.Text</h1>
+            <hr />
+            <form asp-action="UpdatePhrase" asp-route-id="@Model.Id">
+                <div class="form-group">
+                    <label class="align-top" for="text">Text:</label>
+                    <textarea name="text">@Model.Text</textarea>
+                </div>
+                <button>Save!</button>
+            </form>
+        }
+    }
+</div>
+
+
